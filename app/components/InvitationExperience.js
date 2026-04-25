@@ -79,6 +79,44 @@ export default function InvitationExperience({ scriptClassName, serifClassName }
     };
   }, []);
 
+  useEffect(() => {
+    if (phase !== "invitation") {
+      return;
+    }
+
+    const sections = document.querySelectorAll(".second-page, .details-page, .map-page, .rsvp-page");
+    if (sections.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const textNodes = entry.target.querySelectorAll(
+            "h2, h3, p, a, label, button, .agenda-key, .agenda-value, .agenda-contact-link"
+          );
+
+          textNodes.forEach((node, index) => {
+            node.classList.add("slide-text");
+            node.style.setProperty("--slide-delay", `${Math.min(index * 70, 500)}ms`);
+            node.classList.add("is-visible");
+          });
+
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [phase]);
+
   const openEnvelope = () => {
     if (phase !== "envelope") {
       return;
