@@ -1,0 +1,248 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #f8ebd5;
+}
+
+.envelope-page {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+}
+
+.envelope-content {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.envelope-button {
+  width: min(320px, 82vw);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  animation: envelopeFloat 2.1s ease-in-out infinite;
+  line-height: 0;
+}
+
+.envelope-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 24px rgba(35, 35, 35, 0.16));
+  border-radius: 2px;
+}
+
+.envelope-button:focus-visible {
+  outline: 3px solid #d23636;
+  outline-offset: 8px;
+  border-radius: 14px;
+}
+
+.envelope-text {
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  color: #c71f28;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  gap: 1.2rem;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 186, 150, 0.2) 0%, rgba(255, 186, 150, 0) 42%),
+    linear-gradient(180deg, #c13e3a 0%, #a61f1f 58%, #8c0f15 100%);
+  opacity: 1;
+  transition: opacity 600ms ease;
+}
+
+.preloader-heart-wrap {
+  position: relative;
+  width: 124px;
+  height: 106px;
+  display: grid;
+  place-items: center;
+}
+
+.heart {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: #ffe8d5;
+  transform: rotate(-45deg);
+  border-radius: 8px;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: #ffe8d5;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -21px;
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: 21px;
+}
+
+.heart-main {
+  animation: heartbeat 1.1s infinite ease-in-out;
+  filter: drop-shadow(0 8px 12px rgba(64, 7, 10, 0.22));
+}
+
+.heart-left {
+  left: 8px;
+  bottom: 20px;
+  transform: rotate(-45deg) scale(0.52);
+  opacity: 0.75;
+  animation: floatLove 2.3s infinite ease-in-out;
+}
+
+.heart-right {
+  right: 8px;
+  bottom: 20px;
+  transform: rotate(-45deg) scale(0.52);
+  opacity: 0.75;
+  animation: floatLove 2.3s infinite ease-in-out 0.45s;
+}
+
+.preloader-text {
+  font-size: clamp(1.1rem, 3.8vw, 1.5rem);
+  color: #fff0dc;
+  letter-spacing: 0.08em;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: rotate(-45deg) scale(1);
+  }
+  15% {
+    transform: rotate(-45deg) scale(1.12);
+  }
+  28% {
+    transform: rotate(-45deg) scale(1.01);
+  }
+  44% {
+    transform: rotate(-45deg) scale(1.16);
+  }
+  58% {
+    transform: rotate(-45deg) scale(1);
+  }
+}
+
+@keyframes floatLove {
+  0%,
+  100% {
+    transform: rotate(-45deg) translateY(0) scale(0.52);
+    opacity: 0.7;
+  }
+  50% {
+    transform: rotate(-45deg) translateY(-8px) scale(0.65);
+    opacity: 0.95;
+  }
+}
+
+@keyframes envelopeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.landing-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  background-image: url("../assets/landing.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #c13e3a 0%, #a61f1f 58%, #8c0f15 100%);
+  opacity: 0.8;
+}
+
+.landing-content {
+  display: grid;
+  gap: 0.4rem;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+  z-index: 1;
+  width: min(430px, 90vw);
+  padding: clamp(2rem, 8vw, 3.2rem) 1.2rem;
+  text-shadow: 0 1px 2px rgba(65, 8, 8, 0.35);
+}
+
+.logo-image {
+  width: min(350px, 80vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(58, 7, 9, 0.22));
+  margin-bottom: 0.1rem;
+}
+
+.save-date {
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+  margin-top: 0.1rem;
+  color: #fff2dd;
+}
+
+.wedding-date {
+  font-size: clamp(1.7rem, 5.4vw, 2.6rem);
+  letter-spacing: 0.08em;
+  margin-top: 0.1rem;
+  color: #f8e7ca;
+}
+
+.leaves-image {
+  width: min(185px, 48vw);
+  height: auto;
+  object-fit: contain;
+  margin-top: 0.35rem;
+  opacity: 0.9;
+}
