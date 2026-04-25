@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import HotelRoundedIcon from "@mui/icons-material/HotelRounded";
+import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import Preloader from "./Preloader";
 import envelope from "../../assets/envelope.png";
 import logo from "../../assets/logo.png";
@@ -61,6 +65,8 @@ function getCalendarCells(year, monthIndex) {
 export default function InvitationExperience({ scriptClassName, serifClassName }) {
   const [phase, setPhase] = useState("envelope");
   const [countdown, setCountdown] = useState(() => getCountdownParts());
+  const [guestName, setGuestName] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const calendarCells = getCalendarCells(CALENDAR_YEAR, CALENDAR_MONTH_INDEX);
 
   useEffect(() => {
@@ -82,6 +88,16 @@ export default function InvitationExperience({ scriptClassName, serifClassName }
     window.setTimeout(() => {
       setPhase("invitation");
     }, PRELOADER_MS);
+  };
+
+  const confirmAttendance = (event) => {
+    event.preventDefault();
+
+    if (!guestName.trim()) {
+      return;
+    }
+
+    setIsConfirmed(true);
   };
 
   return (
@@ -127,7 +143,7 @@ export default function InvitationExperience({ scriptClassName, serifClassName }
             <div className="second-page-content">
               <div className="second-page-header">
                 <p className="countdown-subtitle">THE FINAL COUNTDOWN</p>
-                <h2 className="countdown-title">
+                <h2 className={`countdown-title ${serifClassName}`}>
                   Until We Say <span className="countdown-highlight">"I Do"</span>
                 </h2>
                 <p className="countdown-paragraph">
@@ -192,13 +208,120 @@ export default function InvitationExperience({ scriptClassName, serifClassName }
                     </div>
                   ))}
                 </div>
-                <p className="calendar-footnote">Friday, 22 May 2026</p>
-              </div>
-              <div className="calendar-time-block">
-                <p className="calendar-time-label">Celebration Time</p>
-                <p className="calendar-time">6:00 PM to 11:00PM</p>
               </div>
             </div>
+          </section>
+          <section className="details-page">
+            <div className="details-card">
+              <p className="details-subtitle">Event Agenda</p>
+              <h3 className={`details-title ${serifClassName}`}>Plan for the Celebration</h3>
+
+              <ul className="agenda-list">
+                <li className="agenda-item">
+                  <div className="agenda-text">
+                    <div className="agenda-heading">
+                      <span className="agenda-icon" aria-hidden="true">
+                        <HotelRoundedIcon fontSize="inherit" />
+                      </span>
+                      <span className="agenda-key">Hotel</span>
+                    </div>
+                    <span className="agenda-value">Depanama Water Villa</span>
+                  </div>
+                </li>
+                <li className="agenda-item">
+                  <div className="agenda-text">
+                    <div className="agenda-heading">
+                      <span className="agenda-icon" aria-hidden="true">
+                        <LocationOnRoundedIcon fontSize="inherit" />
+                      </span>
+                      <span className="agenda-key">Address</span>
+                    </div>
+                    <span className="agenda-value">No . 196/26 Isuru Uyana , Pannipitiya</span>
+                  </div>
+                </li>
+                <li className="agenda-item">
+                  <div className="agenda-text">
+                    <div className="agenda-heading">
+                      <span className="agenda-icon" aria-hidden="true">
+                        <CallRoundedIcon fontSize="inherit" />
+                      </span>
+                      <span className="agenda-key">Contact No</span>
+                    </div>
+                    <div className="agenda-value agenda-value-contact">
+                      <a className="agenda-contact-link" href="tel:0768650713">
+                        0768650713 - Groom
+                      </a>
+                      <a className="agenda-contact-link" href="tel:0789251014">
+                        0789251014 - Bride
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li className="agenda-item">
+                  <div className="agenda-text">
+                    <div className="agenda-heading">
+                      <span className="agenda-icon" aria-hidden="true">
+                        <AccessTimeRoundedIcon fontSize="inherit" />
+                      </span>
+                      <span className="agenda-key">Time</span>
+                    </div>
+                    <span className="agenda-value">6PM - 11PM</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section className="map-page">
+            <div className="map-card">
+              <p className="map-subtitle">Location</p>
+              <h3 className={`map-title ${serifClassName}`}>Find Us on Google Maps</h3>
+              <div className="map-frame-wrap">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.2612086572585!2d79.94205057397703!3d6.859265119172573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25190ebac6777%3A0xbf32d26d152457bc!2sDepanama%20Water%20Villa%20Hotel!5e0!3m2!1sen!2slk!4v1777115384337!5m2!1sen!2slk"
+                  className="map-frame"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Depanama Water Villa Hotel location"
+                />
+              </div>
+            </div>
+          </section>
+          <section className="rsvp-page">
+            <div className="rsvp-page-content">
+              <p className="rsvp-page-subtitle">Final Confirmation</p>
+              <h3 className={`rsvp-page-title ${serifClassName}`}>Please Confirm Your Attendance</h3>
+              <form className="rsvp-page-form" onSubmit={confirmAttendance}>
+                <input
+                  id="rsvp-name"
+                  className="rsvp-page-input"
+                  type="text"
+                  value={guestName}
+                  onChange={(event) => {
+                    setGuestName(event.target.value);
+                    if (isConfirmed) {
+                      setIsConfirmed(false);
+                    }
+                  }}
+                  placeholder="Enter your name"
+                  required
+                />
+                <button className="rsvp-page-button" type="submit">
+                  Confirm Attendance
+                </button>
+                <p className="rsvp-page-note">
+                  Your presence is the greatest gift to us on this special day.  
+                  We would be truly honored to celebrate this joyful beginning together with you.
+                </p>
+              </form>
+              {isConfirmed && (
+                <p className="rsvp-page-success">
+                  Thank you, {guestName.trim()}! We are excited to celebrate with you.
+                </p>
+              )}
+            </div>
+            <footer className="rsvp-page-footer">With love, Buyan &amp; Sewwandi</footer>
           </section>
         </div>
       )}
